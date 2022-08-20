@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+        int maxCanReach = startFuel;
+        priority_queue<int>pq;
+        int count=0;
+        int index=0;
+        while(maxCanReach<target){
+            while(index<stations.size() && stations[index][0]<=maxCanReach){
+                // storing fuel provided by gas station in our priority queue
+                pq.push(stations[index][1]); //fuel
+                index++;
+            }
+            if(pq.empty()) return -1;
+            maxCanReach+=pq.top();
+            pq.pop();//max
+            count++;
+        }
+        return count;
+    }
+};

@@ -1,0 +1,24 @@
+class Solution {
+public:
+	  // b = buy flag
+    // tl = transactions left
+    int solve(vector<int>& prices,int b,int tl,int d,vector<vector<vector<int>>>&dp)
+    {
+        //base condition
+        if(d==prices.size() || tl == 0) return 0;
+        if(dp[d][tl][b]!=-1) return dp[d][tl][b];
+        
+        //Hypoth
+        if(b)
+            return dp[d][tl][b] = max(-prices[d] + solve(prices,0,tl,d+1,dp),     //Bought
+                                    solve(prices,1,tl,d+1,dp));                   //Not Bought
+        else
+            return dp[d][tl][b] = max(prices[d] + solve(prices,1,tl-1,d+1,dp),    //sold
+                                   solve(prices,0,tl,d+1,dp));                    //Not sold
+        return 0;
+    }
+    int maxProfit(int k, vector<int>& prices) {
+        vector<vector<vector<int>>> dp(prices.size()+1,vector<vector<int>> (k+1,vector<int> (2,-1)));
+        return solve(prices,1,k,0,dp);
+    }
+};

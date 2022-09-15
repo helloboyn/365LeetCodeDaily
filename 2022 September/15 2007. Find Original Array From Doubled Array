@@ -1,0 +1,20 @@
+class Solution{
+    public:
+    vector<int> findOriginalArray(vector<int>&array){
+        int n=array.size();
+        if(n%2==1) return{};
+        sort(array.begin(),array.end());
+        vector<int>ans;
+        map<int,int>mp;
+        for(int i=0;i<n;i++)
+            mp[array[i]]++;
+        for(int i=0;i<n;i++){
+            if(mp[array[i]]==0)continue;
+            if(mp[array[i]*2]==0)return {};
+            ans.push_back(array[i]);
+            mp[array[i]]--;
+            mp[array[i]*2]--;
+        }
+        return ans;
+    }
+};

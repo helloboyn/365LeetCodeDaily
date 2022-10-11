@@ -1,12 +1,20 @@
 class Solution {
 public:
     bool increasingTriplet(vector<int>& nums) {
-        long long a = 1e10, b = 1e10;
-        for (int i : nums) {
-            if (i > b) return true;
-            if (i > a) b = min((long long) i, b);
-            a = min((long long) i, a);
+        //if(nums.size() < 3)return false; // No need decleare the value
+        int i=INT_MAX;
+        int j=INT_MAX;
+        for(auto & ele:nums){   //scracth value from vector
+            if(ele<=i){
+                i=ele;          //set first as el
+            }    
+            else if(ele<=j){    //when element greater than first element
+                j=ele;          //set second as el
+            }
+            else{               // come  two ele 3rd element is greater         
+                return true;    //return the result        
+            }                   //than first and second ..so it is true
         }
-        return false;
+    return false;
     }
 };

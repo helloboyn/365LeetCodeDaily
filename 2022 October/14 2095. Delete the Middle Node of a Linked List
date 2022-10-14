@@ -1,0 +1,25 @@
+class Solution {
+private:
+    ListNode* getPreviousOfMiddle(ListNode* head)
+    {
+        ListNode* slow = new ListNode(-1);
+        slow->next = head;
+        ListNode* fast = head;
+        
+        while(fast && fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        if(head->next == NULL) return NULL;
+        
+        ListNode* prev = getPreviousOfMiddle(head);
+        
+        prev->next = prev->next->next;
+        return head;
+    }
+};

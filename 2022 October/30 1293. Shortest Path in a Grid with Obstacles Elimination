@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int shortestPath(vector<vector<int>>& grid, int k) {
+        int m = grid.size(), n = grid[0].size(), res = 0;
+        vector<vector<int>> obs(m, vector<int>(n, k+1));
+        vector<vector<int>> dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        queue<vector<int>> q;
+        q.push({0,0,grid[0][0]});
+        while(!q.empty()) {
+            int s = q.size();
+            while(s--) {
+                vector<int> temp = q.front();q.pop();
+                if(temp[0] == m-1 && temp[1] == n-1) return res;      
+                for(int k = 0; k < 4; k++) {
+                    int i = temp[0]+dir[k][0], j = temp[1]+dir[k][1];
+                    if(i < 0 || i >= m || j < 0 || j >= n) continue;
+                    if(obs[i][j] > (temp[2]+grid[i][j])) {
+                        q.push({i,j,temp[2]+grid[i][j]});
+                        obs[i][j] = temp[2]+grid[i][j];
+                    }
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+};

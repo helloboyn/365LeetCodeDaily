@@ -1,0 +1,20 @@
+class Solution {
+public:
+      std::string removeDuplicates(std::string_view S) {
+            std::string result;
+            std::size_t pos = 0;
+            while ( pos < S.size()) {
+                  if (S[pos] != result.back() ) {
+                        if (S[pos]==S[pos+1] ) {
+                              ++pos;
+                        }
+                        else result.push_back(S[pos]);
+                  }
+                  else {
+                        result.pop_back();
+                  }
+                  pos++;
+            }
+            return result;
+    }
+};

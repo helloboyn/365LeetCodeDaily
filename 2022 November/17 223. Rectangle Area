@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int R1 = (C-A)*(D-B); //First Ractagle
+        int R2 = (G-E)*(H-F); //Second Ractagle
+        int OH = min(C,G)>max(A,E)? min (C,G)-max(A,E):0; //Overlaping Height
+        int OW = min(D,H)>max(B,F)? min (D,H)-max(B,F):0; //Overlaping Width
+        return R1+R2-OH*OW;
+    }
+};

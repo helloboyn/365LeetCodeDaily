@@ -1,0 +1,24 @@
+class Solution {
+private:
+    struct Job{
+        int startT,endT,profit;
+        Job(int s, int e,int p):startT(s),endT(e),profit(p){}
+        bool operator<(const Job& j){return endT<j.endT;}
+    };
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        vector<Job> jobs;
+        for(int i = 0;i<profit.size();i++)
+            jobs.emplace_back(startTime[i],endTime[i],profit[i]);
+        sort(jobs.begin(),jobs.end());
+        map<int,int>maxProfit = {{0,0}};
+        for(auto& job: jobs){
+            auto it = --maxProfit.upper_bound(job.startT);
+            int curProfit = job.profit + it->second;
+            int preProfix = maxProfit.rbegin()->second;
+            if(curProfit>preProfix)
+                maxProfit[job.endT]=curProfit;
+        }
+        return maxProfit.rbegin()->second;
+    }
+};

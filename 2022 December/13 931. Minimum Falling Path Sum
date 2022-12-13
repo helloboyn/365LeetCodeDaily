@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        int mini = 1e8;
+        vector<int> prev(m,0),cur(n,0);
+        for(int i=0;i<m;i++) prev[i] = matrix[0][i];
+
+        for(int i=1;i<n;i++){
+            for(int j=0;j<m;j++){
+                //upwards path
+                int u = matrix[i][j] + prev[j];
+
+                //left diagonal path sum
+                int ld = matrix[i][j];
+                //checking base cases for ld
+                if(j-1 >= 0){
+                    ld+=prev[j-1];
+                }else{
+                    ld+=(int)(1e8);
+                }
+
+                //right diagonal path sum
+                int rd = matrix[i][j];
+                //checking base cases for rd
+                if(j+1<m){
+                    rd+=prev[j+1];
+                }else{
+                    rd+=(int)(1e8);
+                }
+
+                //update the minimum path sum to curr
+                cur[j] = min(u,min(ld,rd));
+            }
+            //reinitialize the prev with cur
+            prev = cur;
+        }
+
+        //compare the minimum across each row of matrix using   previous array
+        for(int i=0;i<m;i++){
+            mini = min(mini,prev[i]);
+        }
+
+        //return the minimum path sum
+        return mini;
+    }
+};

@@ -1,0 +1,15 @@
+class Solution {
+public:
+	int rob(vector<int>& nums) {
+		int p1=nums[0],p2=0;
+		for(int i=1;i<nums.size();i++){
+			int pick=nums[i];
+			if(i!=1)pick+=p2;
+			int notpick=p1;
+			int curri=max(pick,notpick);
+			p2=p1;
+			p1=curri;
+		}
+		return p1;
+	}
+};

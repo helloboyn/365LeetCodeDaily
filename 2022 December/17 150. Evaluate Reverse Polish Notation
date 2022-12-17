@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        string s = tokens.back();
+        tokens.pop_back();
+
+        if(s != "+" && s != "-" && s != "*" && s != "/"){
+            return stoi(s);
+        }
+        else{
+            long long y = evalRPN(tokens);
+            long long x = evalRPN(tokens);
+            if(s == "+") return x + y;
+            else if(s == "-") return x - y;
+            else if(s == "*") return x * y;
+            else return x / y;
+        }
+    }
+};

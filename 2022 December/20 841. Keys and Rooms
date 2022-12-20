@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        map<int, bool>mp;
+        stack<int>st;
+        st.push(0);
+        while(!st.empty())
+        {
+            int cur=st.top();
+            st.pop();
+            mp[cur]=true;
+            for(auto &i: rooms[cur]){
+                if(mp[i]==false)
+                st.push(i);
+            }
+        }
+        return mp.size()==rooms.size();
+    }
+};

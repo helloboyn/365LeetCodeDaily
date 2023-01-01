@@ -1,0 +1,4 @@
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        word=s.split()
+        return [*map(pattern.index, pattern)]==[*map(word.index,word)]

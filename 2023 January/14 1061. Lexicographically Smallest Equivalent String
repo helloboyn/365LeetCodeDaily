@@ -1,0 +1,22 @@
+class Solution:
+    def smallestEquivalentString(self, s1: str, s2: str, baseStr: str) -> str:
+        smallest ={}
+
+        for x in string.ascii_lowercase:
+            smallest[x] = x
+
+        def get_smallest(x):
+            if smallest [x] != x:
+                smallest[x] = get_smallest(smallest[x])
+            return smallest[x]
+
+        for a, b in zip(s1, s2):
+            smaller = min(get_smallest(a), get_smallest(b))
+
+            smallest[get_smallest(a)]= smaller
+            smallest[get_smallest(b)]= smaller
+        ans = []
+        for x in baseStr:
+            ans.append(get_smallest(x))
+        return "".join(ans)
+        

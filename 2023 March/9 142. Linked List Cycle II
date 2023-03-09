@@ -1,0 +1,12 @@
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        mapping = dict()
+        ans = None
+        while head:
+            if head in mapping.keys():
+                ans = head
+                break
+            else:
+                mapping[head] = 1
+            head = head.next
+        return ans

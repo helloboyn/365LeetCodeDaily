@@ -1,0 +1,50 @@
+class Solution:
+    def maxNumEdgesToRemove(self, n: int, edges: List[List[int]]) -> int:
+        edges = sorted(edges, key=lambda x : x[0], reverse=True)
+        # print(edges)
+        alicep = [i for i in range(n+1)]
+        bobp = [i for i in range(n+1)]
+        def find(node, parent):
+            if parent[node] == node:
+                return node
+            parent[node] = find(parent[node], parent)
+            return parent[node]
+        
+        def union(n1, n2, parent):
+            p1 = find(n1, parent)
+            p2 = find(n2, parent)
+            if p1 == p2:
+                return
+            parent[p1] = p2
+
+        req = set()
+        # alice
+        for i,edge in enumerate(edges):
+            if edge[0] != 2:
+                p1 = find(edge[1], alicep)
+                p2 = find(edge[2], alicep)
+                if p1 != p2:
+                    req.add(i)
+                union(p1, p2, alicep)
+                # print(req, "alice", alicep)
+            if edge[0] != 1:
+                p1 = find(edge[1], bobp)
+                p2 = find(edge[2], bobp)
+                if p1 != p2:
+                    req.add(i)
+                union(p1, p2, bobp)
+                # print(req, "bob", bobp)
+        # print(req)
+        prev = find(1, alicep)
+        for i in range(2,n+1):
+            p2 = find(i,alicep)
+            if prev != p2:
+                return -1
+        prev = find(1, bobp)
+        for i in range(2,n+1):
+            p2 = find(i,bobp)
+            if prev != p2:
+                return -1
+        return len(edges)-len(req)
+                
+                
